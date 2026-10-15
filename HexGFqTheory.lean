@@ -6,11 +6,11 @@ Authors: Kim Morrison
 
 module
 
-public import HexGFqMathlib.Basic
-public import HexGFqMathlib.GF2q
-public import HexGFqMathlib.Subfield
-public import HexGFqMathlib.Embeddings
-public import HexGFqMathlib.Primitivity
+public import HexGFqTheory.Basic
+public import HexGFqTheory.GF2q
+public import HexGFqTheory.Subfield
+public import HexGFqTheory.Embeddings
+public import HexGFqTheory.Primitivity
 
 public section
 
@@ -20,7 +20,7 @@ constructors.
 
 The executable `HexGFq` layer keeps `GFq` and optimized `GF2q` separate so the
 representation choice stays explicit.  This module packages the existing
-`HexGF2Mathlib` packed-to-generic ring equivalence as the public
+`HexGF2Theory` packed-to-generic ring equivalence as the public
 equivalence between the optimized binary Conway field and the generic Conway
 field.
 -/

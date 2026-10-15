@@ -6,11 +6,11 @@ Authors: Kim Morrison
 
 module
 
-public import HexGFqMathlib.PrimitivityCore
+public import HexGFqTheory.PrimitivityCore
 
 public section
 
-namespace HexGFqMathlib
+namespace HexGFqTheory
 
 /-- The Conway generator of GF(811^3) has order 533411730. -/
 theorem orderOf_gen_811_3 :
@@ -422,4 +422,4 @@ theorem orderOf_gen_997_3 :
     orderOf (Hex.GFq.ofPoly Hex.Conway.supportedEntry_997_3 Hex.FpPoly.X) = 997 ^ 3 - 1 :=
   orderOf_gen_of_primitive _ Hex.Conway.primitive_997_3
 
-end HexGFqMathlib
+end HexGFqTheory

@@ -6,11 +6,11 @@ Authors: Kim Morrison
 
 module
 
-public import HexGFqMathlib.Subfield
+public import HexGFqTheory.Subfield
 
 public section
 
-namespace HexGFqMathlib.Conway
+namespace HexGFqTheory.Conway
 
 /-- The canonical embedding of GF(59^1) into GF(59^4). -/
 noncomputable def embed_59_1_4 :
@@ -780,4 +780,4 @@ noncomputable def embed_227_1_3 :
       Hex.GFq 227 3 Hex.Conway.supportedEntry_227_3 :=
   conwayEmbed 227 1 3 _ _ Hex.Conway.compat_227_1_3
 
-end HexGFqMathlib.Conway
+end HexGFqTheory.Conway

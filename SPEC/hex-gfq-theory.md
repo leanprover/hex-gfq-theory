@@ -1,4 +1,4 @@
-# hex-gfq-mathlib (depends on hex-gfq + hex-gf2-mathlib + Mathlib)
+# hex-gfq-theory (depends on hex-gfq + hex-gf2-theory + Mathlib)
 
 Supplies the finiteness and cardinality layer for the quotient-field
 construction, the Mathlib `Field` instance on it, and the correspondence with
@@ -43,7 +43,7 @@ part callers want.
 hex-gfq-field, even when `p = 2`. The optimized `p = 2` constructor is `GF2q n`
 from hex-gfq, and it reaches Mathlib in two legs: `GF2q n ≃+* GFq 2 n` from
 here, composed with `GFq 2 n ≃+* GaloisField 2 n`, also from here. The first
-leg is built on hex-gf2-mathlib's `GF2n.equiv`, which is why this library
+leg is built on hex-gf2-theory's `GF2n.equiv`, which is why this library
 depends on it.
 
 ## Proof strategy
@@ -105,5 +105,5 @@ statement for every committed entry, including the trivial group at `GF(2)`.
 
 ## Namespaces
 
-Declarations live in `HexGFqMathlib`, except `GF2q.equivGFq`, which extends
+Declarations live in `HexGFqTheory`, except `GF2q.equivGFq`, which extends
 `Hex.GF2q` so that it reads as part of the constructor's API at the call site.

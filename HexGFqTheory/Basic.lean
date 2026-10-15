@@ -7,7 +7,7 @@ Authors: Kim Morrison
 module
 
 public import HexGFq
-public import HexGF2Mathlib.Field
+public import HexGF2Theory.Field
 public import Mathlib.Algebra.Field.MinimalAxioms
 public import Mathlib.FieldTheory.Finite.GaloisField
 
@@ -21,7 +21,7 @@ transport `Fintype` support onto generic `Hex.GFqField.FiniteField` values, and
 states the canonical-cardinality equivalence to Mathlib's `GaloisField`.
 -/
 
-namespace HexGFqMathlib
+namespace HexGFqTheory
 
 open Hex
 
@@ -409,4 +409,4 @@ noncomputable def equivGaloisField [Fact p.Prime]
 
 end GFq
 
-end HexGFqMathlib
+end HexGFqTheory

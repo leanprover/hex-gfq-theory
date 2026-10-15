@@ -1,4 +1,4 @@
-# hex-gfq-mathlib
+# hex-gfq-theory
 
 Part of [`hex`](https://github.com/kim-em/hex-dev), a computer algebra
 library for Lean 4. The aim is fast executable code, fully verified, built
@@ -10,21 +10,21 @@ structure, finiteness and cardinality on the executable quotient-field
 construction, identifies the canonical Conway fields with Mathlib's
 `GaloisField`, and defines the canonical embedding of one committed Conway
 field into another. The packed binary model reaches Mathlib through
-[`hex-gf2-mathlib`](https://github.com/leanprover/hex-gf2-mathlib), and the
+[`hex-gf2-theory`](https://github.com/leanprover/hex-gf2-theory), and the
 polynomial-level steps route through
-[`hex-poly-fp-mathlib`](https://github.com/leanprover/hex-poly-fp-mathlib).
+[`hex-poly-fp-theory`](https://github.com/leanprover/hex-poly-fp-theory).
 
 # Quickstart
 
 ```toml
 [[require]]
-name = "hex-gfq-mathlib"
-git = "https://github.com/leanprover/hex-gfq-mathlib.git"
+name = "hex-gfq-theory"
+git = "https://github.com/leanprover/hex-gfq-theory.git"
 rev = "main"
 ```
 
 ```lean
-import HexGFqMathlib
+import HexGFqTheory
 open Hex
 
 -- The packed binary Conway field is Mathlib's `GaloisField 2 n`.
@@ -36,7 +36,7 @@ noncomputable example (n : Nat) [GFq.PackedGF2Entry n] :
 example {p n : Nat} [ZMod64.Bounds p] [ZMod64.PrimeModulus p]
     (h : Conway.SupportedEntry p n) :
     Fintype.card (GFq p n h) = p ^ n :=
-  HexGFqMathlib.GFq.fintype_card_eq_pow h
+  HexGFqTheory.GFq.fintype_card_eq_pow h
 ```
 
 # Functionality
@@ -96,7 +96,7 @@ noncomputable def equivGaloisField [Fact p.Prime]
 ```
 
 The packed binary constructor reaches the same place in two legs, the first
-built on hex-gf2-mathlib's `GF2n.equiv` and computable, the second inheriting
+built on hex-gf2-theory's `GF2n.equiv` and computable, the second inheriting
 the choice `ringEquivOfCardEq` makes:
 
 ```lean
@@ -138,7 +138,7 @@ every supported entry, including `GF(2)`.
 
 Use [`hex-gfq`](https://github.com/leanprover/hex-gfq) alone for computation;
 this package is for theorem statements and interoperability involving Mathlib.
-See the [SPEC](SPEC/hex-gfq-mathlib.md) for the representation choice and the
+See the [SPEC](SPEC/hex-gfq-theory.md) for the representation choice and the
 proof strategy behind each equivalence.
 
 # Contributing

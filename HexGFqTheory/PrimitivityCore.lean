@@ -6,7 +6,7 @@ Authors: Kim Morrison
 
 module
 
-public import HexGFqMathlib.Subfield
+public import HexGFqTheory.Subfield
 public import HexConway.Primitivity
 public import Mathlib.GroupTheory.OrderOfElement
 
@@ -23,14 +23,14 @@ check runs on `FpPoly` representatives with structural powers, while `orderOf`
 is about Mathlib's `^` in the field.
 
 `orderOf_gen_of_primitive` supplies that transport. The bridge is
-{name}`HexGFqMathlib.ofPolyHom`, which is a ring homomorphism, so it carries
+{name}`HexGFqTheory.ofPolyHom`, which is a ring homomorphism, so it carries
 the executable powers to Mathlib powers by `map_mul` and `map_pow`; reduced
 representatives reflect equality with one, and the validated factorization
 makes the supplied prime list exhaustive. Generated modules specialize the result to every supported entry, including
 the trivial multiplicative group in characteristic two and degree one.
 -/
 
-namespace HexGFqMathlib
+namespace HexGFqTheory
 
 open Hex
 
@@ -49,7 +49,7 @@ theorem ofPolyHom_reduceMod (y : Hex.FpPoly p) :
   rw [Hex.GFqField.repr_ofPoly, Hex.GFqField.repr_ofPoly,
     Hex.GFqRing.reduceMod_idem]
 
-/-- The `modByMonic` spelling of {name}`HexGFqMathlib.ofPolyHom_reduceMod`. -/
+/-- The `modByMonic` spelling of {name}`HexGFqTheory.ofPolyHom_reduceMod`. -/
 theorem ofPolyHom_modByMonic (hm : Hex.DensePoly.Monic f) (y : Hex.FpPoly p) :
     ofPolyHom f hf hp hirr (Hex.FpPoly.modByMonic f y hm) =
       ofPolyHom f hf hp hirr y := by
@@ -60,7 +60,7 @@ theorem ofPolyHom_modByMonic (hm : Hex.DensePoly.Monic f) (y : Hex.FpPoly p) :
 
 /-- The executable structural power carries to a Mathlib power.
 
-This is clean now only because `HexGFqMathlib.field` pins `npow` to the
+This is clean now only because `HexGFqTheory.field` pins `npow` to the
 executable power: with Mathlib's `npowRec` default the two would not be
 definitionally equal and `pow_zero`/`pow_succ` would not apply to the `^` that
 elaboration picks here. -/
@@ -171,7 +171,7 @@ theorem orderOf_gen_of_primitive {n : Nat} (h : Hex.Conway.SupportedEntry p n)
   rcases hcheck with ⟨⟨hfactor, hfullPower⟩, hperPower⟩
   apply orderOf_eq_of_pow_and_pow_div_prime
   · have hn : 0 < n := by
-      simpa only [HexGFqMathlib.GFq.conwayPoly_degree h] using
+      simpa only [HexGFqTheory.GFq.conwayPoly_degree h] using
         Hex.Conway.conwayPoly_nonconstant p n h
     exact Nat.sub_pos_of_lt (Nat.one_lt_pow (Nat.ne_of_gt hn) h.prime.one_lt)
   · change (ofPolyHom (Hex.Conway.conwayPoly p n h)
@@ -203,4 +203,4 @@ theorem orderOf_gen_of_primitive {n : Nat} (h : Hex.Conway.SupportedEntry p n)
       (reduceMod_powerResidue (Hex.Conway.conwayPoly_monic p n h)
         (((p ^ n - 1) / q)))).mp hone)
 
-end HexGFqMathlib
+end HexGFqTheory

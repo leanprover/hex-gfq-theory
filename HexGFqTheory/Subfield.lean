@@ -6,9 +6,9 @@ Authors: Kim Morrison
 
 module
 
-public import HexGFqMathlib.Basic
-public import HexPolyFpMathlib.Basic
-public import HexModArithMathlib.ZMod64Equiv
+public import HexGFqTheory.Basic
+public import HexPolyFpTheory.Basic
+public import HexModArithTheory.ZMod64Equiv
 public import HexConway.Compatibility
 public import Mathlib.Algebra.Polynomial.Eval.Defs
 
@@ -30,7 +30,7 @@ only that the executable substitution agrees with it, and that is additive and
 monomial data.
 -/
 
-namespace HexGFqMathlib
+namespace HexGFqTheory
 
 open Hex
 
@@ -83,14 +83,14 @@ def ofPolyHom (f : Hex.FpPoly p) (hf : 0 < Hex.FpPoly.degree f)
     ofPolyHom f hf hp hirr g = Hex.GFqField.ofPoly f hf hp hirr g :=
   rfl
 
-open HexModArithMathlib.ZMod64 in
+open HexModArithTheory.ZMod64 in
 omit [Hex.ZMod64.PrimeModulus p] in
 /-- `toZMod` is injective, since `ofZMod` inverts it. -/
 private theorem toZMod_injective {a b : Hex.ZMod64 p} (h : toZMod a = toZMod b) :
     a = b := by
   rw [← ofZMod_toZMod a, ← ofZMod_toZMod b, h]
 
-open HexModArithMathlib.ZMod64 in
+open HexModArithTheory.ZMod64 in
 omit [Hex.ZMod64.PrimeModulus p] in
 /-- The inverse coefficient map is additive. Derived from `toZMod_add`; the
 `≃+*` bundling cannot be used directly here because `Hex.ZMod64 p` has no
@@ -100,7 +100,7 @@ private theorem ofZMod_add (a b : ZMod p) :
   apply toZMod_injective
   rw [toZMod_add, toZMod_ofZMod, toZMod_ofZMod, toZMod_ofZMod]
 
-open HexModArithMathlib.ZMod64 in
+open HexModArithTheory.ZMod64 in
 omit [Hex.ZMod64.PrimeModulus p] in
 /-- The inverse coefficient map is multiplicative. -/
 private theorem ofZMod_mul (a b : ZMod p) :
@@ -108,7 +108,7 @@ private theorem ofZMod_mul (a b : ZMod p) :
   apply toZMod_injective
   rw [toZMod_mul, toZMod_ofZMod, toZMod_ofZMod, toZMod_ofZMod]
 
-open HexModArithMathlib.ZMod64 in
+open HexModArithTheory.ZMod64 in
 /-- The constant embedding `ZMod p →+* FpPoly p`, routing Mathlib's coefficient
 ring through the executable `ZMod64 p`. -/
 def constPolyHom : ZMod p →+* Hex.FpPoly p where
@@ -157,10 +157,10 @@ variable {hp : Hex.Nat.Prime p} {hirr : Hex.FpPoly.Irreducible f}
 theorem ofPolyHom_compose_eq_eval₂ (b : Hex.FpPoly p) (g : Hex.FpPoly p) :
     ofPolyHom f hf hp hirr (Hex.DensePoly.compose g b) =
       Polynomial.eval₂ (constHom f hf hp hirr) (ofPolyHom f hf hp hirr b)
-        (HexPolyFpMathlib.fpPolyEquiv g) := by
+        (HexPolyFpTheory.fpPolyEquiv g) := by
   have key : ∀ P : Polynomial (ZMod p),
       ofPolyHom f hf hp hirr
-          (Hex.DensePoly.compose (HexPolyFpMathlib.fpPolyEquiv.symm P) b) =
+          (Hex.DensePoly.compose (HexPolyFpTheory.fpPolyEquiv.symm P) b) =
         Polynomial.eval₂ (constHom f hf hp hirr) (ofPolyHom f hf hp hirr b) P := by
     intro P
     induction P using Polynomial.induction_on' with
@@ -168,12 +168,12 @@ theorem ofPolyHom_compose_eq_eval₂ (b : Hex.FpPoly p) (g : Hex.FpPoly p) :
         rw [map_add, Hex.FpPoly.compose_add, map_add, hP, hQ, Polynomial.eval₂_add]
     | monomial k c =>
         rw [Polynomial.eval₂_monomial]
-        rw [HexPolyFpMathlib.fpPolyEquiv_symm_apply,
-          HexPolyFpMathlib.polynomialToFpPoly_monomial,
-          Hex.FpPoly.compose_monomial, HexPolyFpMathlib.linearPow_eq_pow,
+        rw [HexPolyFpTheory.fpPolyEquiv_symm_apply,
+          HexPolyFpTheory.polynomialToFpPoly_monomial,
+          Hex.FpPoly.compose_monomial, HexPolyFpTheory.linearPow_eq_pow,
           map_mul, map_pow]
         rfl
-  have := key (HexPolyFpMathlib.fpPolyEquiv g)
+  have := key (HexPolyFpTheory.fpPolyEquiv g)
   rwa [RingEquiv.symm_apply_apply] at this
 
 /-! # The canonical subfield embedding
@@ -191,7 +191,7 @@ noncomputable def substHom (f : Hex.FpPoly p) (hf : 0 < Hex.FpPoly.degree f)
     Hex.FpPoly p →+* Hex.GFqField.FiniteField f hf hp hirr :=
   (Polynomial.eval₂RingHom (constHom f hf hp hirr)
       (ofPolyHom f hf hp hirr b)).comp
-    (HexPolyFpMathlib.fpPolyEquiv : Hex.FpPoly p ≃+* Polynomial (ZMod p)).toRingHom
+    (HexPolyFpTheory.fpPolyEquiv : Hex.FpPoly p ≃+* Polynomial (ZMod p)).toRingHom
 
 theorem substHom_apply (b g : Hex.FpPoly p) :
     substHom f hf hp hirr b g =
@@ -253,7 +253,7 @@ theorem conwayGen_eq_norm (p : Nat) [Hex.ZMod64.Bounds p]
     conwayGen p m n hn =
       (conwayX p n hn) ^ ((p ^ n - 1) / (p ^ m - 1)) := by
   unfold conwayGen conwayX
-  rw [← map_pow, ← HexPolyFpMathlib.linearPow_eq_pow]
+  rw [← map_pow, ← HexPolyFpTheory.linearPow_eq_pow]
   apply (Hex.GFq.ofPoly_eq_ofPoly_iff_reduceMod_eq hn _ _).2
   have hnorm := Hex.Conway.subfieldGen_eq_norm hn hm_pos hmn
   unfold Hex.Conway.subfieldGen at hnorm
@@ -426,4 +426,4 @@ noncomputable example :
 
 end Conway
 
-end HexGFqMathlib
+end HexGFqTheory

@@ -6,11 +6,11 @@ Authors: Kim Morrison
 
 module
 
-public import HexGFqMathlib.PrimitivityCore
+public import HexGFqTheory.PrimitivityCore
 
 public section
 
-namespace HexGFqMathlib
+namespace HexGFqTheory
 
 /-- The Conway generator of GF(271^1) has order 270. -/
 theorem orderOf_gen_271_1 :
@@ -652,4 +652,4 @@ theorem orderOf_gen_521_3 :
     orderOf (Hex.GFq.ofPoly Hex.Conway.supportedEntry_521_3 Hex.FpPoly.X) = 521 ^ 3 - 1 :=
   orderOf_gen_of_primitive _ Hex.Conway.primitive_521_3
 
-end HexGFqMathlib
+end HexGFqTheory
